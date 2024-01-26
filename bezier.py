@@ -119,10 +119,14 @@ while running:
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT:
                 holding_right = False
+                print("t:", round(t, 2))
             if event.key == pygame.K_LEFT:
                 holding_left = False
-            
-            print("t:", round(t, 2))
+                print("t:", round(t, 2))
+
+            if event.key == pygame.K_r and points:
+                points = []
+                print("removed all points")
             
     if holding_right and t <= 1 - T_INCREMENT:
         t = t + T_INCREMENT
