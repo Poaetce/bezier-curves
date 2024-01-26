@@ -102,7 +102,7 @@ while running:
         if event.type == pygame.MOUSEBUTTONUP:
             if event.button == pygame.BUTTON_LEFT:
                 points.append(pygame.mouse.get_pos())
-            if event.button == pygame.BUTTON_RIGHT:
+            if event.button == pygame.BUTTON_RIGHT and points:
                 points.pop()
 
         if event.type == pygame.KEYDOWN:
