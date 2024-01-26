@@ -104,10 +104,10 @@ while running:
         if event.type == pygame.MOUSEBUTTONUP:
             if event.button == pygame.BUTTON_LEFT:
                 points.append(pygame.mouse.get_pos())
-                print(points[-1])
+                print("new point:", points[-1])
 
             if event.button == pygame.BUTTON_RIGHT and points:
-                print(points[-1])
+                print("removed point:", points[-1])
                 points.pop()
 
         if event.type == pygame.KEYDOWN:
@@ -122,7 +122,7 @@ while running:
             if event.key == pygame.K_LEFT:
                 holding_left = False
             
-            print(round(t, 2))
+            print("t:", round(t, 2))
             
     if holding_right and t <= 1 - T_INCREMENT:
         t = t + T_INCREMENT
