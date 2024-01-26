@@ -4,16 +4,20 @@ pygame.init()
 screen = pygame.display.set_mode((960, 540))
 running = True
 
+holding_right = False
+holding_left = False
+
 POINT_SIZE = 5
 THICKNESS = 1
 
-T_INCREMENT = 0.01
+T_INCREMENT = 0.005
 
 BACKGROUND_COLOUR = (255, 255, 255)
 MAIN_COLOUR = (0, 255, 255)
 COLOUR_CHANGE_INDEX = (0, 0, 1)
 
 points = []
+t = 0.5
 
 def draw_points(points: list, colour: tuple, point_size: int):
     if len(points) == 1:
@@ -98,21 +102,29 @@ while running:
         if event.type == pygame.MOUSEBUTTONUP:
             if event.button == pygame.BUTTON_LEFT:
                 points.append(pygame.mouse.get_pos())
-
             if event.button == pygame.BUTTON_RIGHT:
                 points.pop()
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RIGHT and t <= 1 - T_INCREMENT:
-                t = t + T_INCREMENT
+            if event.key == pygame.K_RIGHT:
+                holding_right = True
+            if event.key == pygame.K_LEFT:
+                holding_left = True
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_RIGHT:
+                holding_right = False
+            if event.key == pygame.K_LEFT:
+                holding_left = False
             
-            if event.key == pygame.K_LEFT and t >= 0 + T_INCREMENT:
-                t = t - T_INCREMENT
+    if holding_right and t <= 1 - T_INCREMENT:
+        t = t + T_INCREMENT
+    if holding_left and t >= 0 + T_INCREMENT:
+        t = t - T_INCREMENT
     
     screen.fill(BACKGROUND_COLOUR)
 
-    draw_layers(points, MAIN_COLOUR, COLOUR_CHANGE_INDEX, POINT_SIZE, THICKNESS)
-    trace_curve(points, t, MAIN_COLOUR, THICKNESS * 2)
+    draw_layers(points, t, MAIN_COLOUR, COLOUR_CHANGE_INDEX, POINT_SIZE, THICKNESS)
+    trace_curve(points, MAIN_COLOUR, THICKNESS * 2)
 
     pygame.display.flip()
 
