@@ -15,9 +15,6 @@ COLOUR_CHANGE_INDEX = (0, 0, 1)
 
 points = []
 
-t = 0.5
-
-
 def draw_points(points: list, colour: tuple, point_size: int):
     if len(points) == 1:
         pygame.draw.circle(screen, colour, points[0], point_size * 2)
@@ -61,10 +58,11 @@ def loop_lerp(points: list, t: float):
     return layers
 
 
-def draw_layers(main_colour: tuple, colour_change_index: tuple, point_size: int, line_thickness: int):
+def draw_layers(points: list, t: float, main_colour: tuple, colour_change_index: tuple, point_size: int, line_thickness: int):
     layers = loop_lerp(points, t)
     layer_count = len(layers)
     colour_change = 255 / (layer_count)
+
     for index in range(layer_count):
         layer = layers[index]
         colour = (
@@ -113,8 +111,8 @@ while running:
     
     screen.fill(BACKGROUND_COLOUR)
 
-    draw_layers(MAIN_COLOUR, COLOUR_CHANGE_INDEX, POINT_SIZE, THICKNESS)
-    trace_curve(points, MAIN_COLOUR, THICKNESS * 2)
+    draw_layers(points, MAIN_COLOUR, COLOUR_CHANGE_INDEX, POINT_SIZE, THICKNESS)
+    trace_curve(points, t, MAIN_COLOUR, THICKNESS * 2)
 
     pygame.display.flip()
 
