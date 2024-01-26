@@ -19,8 +19,12 @@ layers = [points]
 t = 0.5
 
 def draw_points(points: list, colour: tuple, point_size: int):
-    for point in points:
-        pygame.draw.circle(screen, colour, point, point_size)
+    if len(points) == 1:
+        pygame.draw.circle(screen, colour, points[0], point_size * 2)
+
+    else:
+        for point in points:
+            pygame.draw.circle(screen, colour, point, point_size)
 
 
 def draw_lines(points: list, colour: tuple, line_thickness: int):
