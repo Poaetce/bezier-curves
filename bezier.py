@@ -98,7 +98,11 @@ while running:
             running = False
 
         if event.type == pygame.MOUSEBUTTONUP:
-            points.append(pygame.mouse.get_pos())
+            if event.button == pygame.BUTTON_LEFT:
+                points.append(pygame.mouse.get_pos())
+
+            if event.button == pygame.BUTTON_RIGHT:
+                points.pop()
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT and t <= 1 - T_INCREMENT:
