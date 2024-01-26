@@ -5,7 +5,7 @@ screen = pygame.display.set_mode((1280, 720))
 running = True
 
 POINT_SIZE = 5
-LINE_THICKNESS = 1
+THICKNESS = 1
 
 T_INCREMENT = 0.01
 
@@ -14,9 +14,9 @@ MAIN_COLOUR = (0, 255, 255)
 COLOUR_CHANGE_INDEX = (0, 0, 1)
 
 points = []
-layers = [points]
 
 t = 0.5
+
 
 def draw_points(points: list, colour: tuple, point_size: int):
     if len(points) == 1:
@@ -61,7 +61,8 @@ def loop_lerp(points: list, t: float):
     return layers
 
 
-def draw_layers(layers: list, main_colour: tuple, colour_change_index: tuple, point_size: int, line_thickness: int):
+def draw_layers(main_colour: tuple, colour_change_index: tuple, point_size: int, line_thickness: int):
+    layers = loop_lerp(points, t)
     layer_count = len(layers)
     colour_change = 255 / (layer_count)
     for index in range(layer_count):
@@ -74,6 +75,21 @@ def draw_layers(layers: list, main_colour: tuple, colour_change_index: tuple, po
 
         draw_points(layer, colour, point_size)
         draw_lines(layer, colour, line_thickness)
+
+
+def curve_point(points: list, t: float):
+    layers = loop_lerp(points, t)
+    if layers[-1]:
+        return layers[-1][0]
+
+
+def trace_curve(points: list, colour: tuple, curve_thickness: int):
+    POINT_COUNT = 1000
+    for index in range(POINT_COUNT):
+        t = index / POINT_COUNT
+        point = curve_point(points, t)
+        if point:
+            pygame.draw.circle(screen, colour, curve_point(points, t), curve_thickness)
 
 
 while running:
@@ -93,9 +109,8 @@ while running:
     
     screen.fill(BACKGROUND_COLOUR)
 
-    layers = loop_lerp(points, t)
-
-    draw_layers(layers, MAIN_COLOUR, COLOUR_CHANGE_INDEX, POINT_SIZE, LINE_THICKNESS)
+    draw_layers(MAIN_COLOUR, COLOUR_CHANGE_INDEX, POINT_SIZE, THICKNESS)
+    trace_curve(points, MAIN_COLOUR, THICKNESS * 2)
 
     pygame.display.flip()
 
