@@ -3,6 +3,7 @@ import pygame
 pygame.init()
 pygame.display.set_caption("Bézier curves")
 screen = pygame.display.set_mode((960, 540))
+clock = pygame.time.Clock()
 running = True
 
 holding_right = False
@@ -11,7 +12,7 @@ holding_left = False
 POINT_SIZE = 5
 THICKNESS = 1
 
-T_INCREMENT = 0.005
+T_INCREMENT = 0.01
 
 BACKGROUND_COLOUR = (255, 255, 255)
 MAIN_COLOUR = (0, 255, 255)
@@ -128,5 +129,7 @@ while running:
     trace_curve(points, MAIN_COLOUR, THICKNESS * 2)
 
     pygame.display.flip()
+
+    clock.tick(60)
 
 pygame.quit()
