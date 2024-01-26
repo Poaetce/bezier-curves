@@ -2,7 +2,7 @@ import pygame
 
 pygame.init()
 pygame.display.set_caption("Bézier curves")
-screen = pygame.display.set_mode((960, 540))
+screen = pygame.display.set_mode((1280, 720))
 clock = pygame.time.Clock()
 running = True
 
