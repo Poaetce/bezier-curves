@@ -4,3 +4,4 @@
 - *left click* to place points
 - *right click* to remove the last point
 - use the *arrow keys* to navigate the curve
+- press *r* to reset
