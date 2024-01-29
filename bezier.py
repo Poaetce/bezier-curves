@@ -21,6 +21,7 @@ COLOUR_CHANGE_INDEX = (0, 0, 1)
 points = []
 t = 0.5
 
+
 def draw_points(points: list, colour: tuple, point_size: int):
     if len(points) == 1:
         pygame.draw.circle(screen, colour, points[0], point_size * 2)
