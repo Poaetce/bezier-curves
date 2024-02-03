@@ -11,6 +11,7 @@ holding_left = False
 
 POINT_SIZE = 5
 THICKNESS = 1
+CURVE_THICKNESS = 4
 
 T_INCREMENT = 0.005
 
@@ -89,12 +90,15 @@ def curve_point(points: list, t: float):
 
 
 def trace_curve(points: list, colour: tuple, curve_thickness: int):
-    POINT_COUNT = 1000
+    POINT_COUNT = 100
+    previous_point = ()
     for index in range(POINT_COUNT):
         t = index / POINT_COUNT
         point = curve_point(points, t)
         if point:
-            pygame.draw.circle(screen, colour, curve_point(points, t), curve_thickness)
+            if previous_point:
+                pygame.draw.line(screen, colour, previous_point, point, curve_thickness)
+            previous_point = point
 
 
 while running:
@@ -137,7 +141,7 @@ while running:
     screen.fill(BACKGROUND_COLOUR)
 
     draw_layers(points, t, MAIN_COLOUR, COLOUR_CHANGE_INDEX, POINT_SIZE, THICKNESS)
-    trace_curve(points, MAIN_COLOUR, THICKNESS * 2)
+    trace_curve(points, MAIN_COLOUR, CURVE_THICKNESS)
 
     pygame.display.flip()
 
